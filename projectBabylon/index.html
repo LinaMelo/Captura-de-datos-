@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>BabylonDemo</title>
+	<script src="http://cdn.babylonjs.com/2-5/babylon.max.js"></script>
+	<script src="js/hand.js"></script>
+</head>
+<style>
+    html, body, div, canvas {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+    }
+
+</style>
+<div id="DivConCaracterística">
+  <canvas id="Modelado3D"></canvas>
+</div>
+
+<script>
+    // Elemento canvas 
+    var ElementoCanvas = document.getElementById("Modelado3D");
+    // Cargar BABYLON 3D en las canvas
+    var Motorbabylon = new BABYLON.Engine(ElementoCanvas, true);
+    var Escenario = new BABYLON.Scene(Motorbabylon);
+    Escenario.clearColor = new BABYLON.Color3(0,0, 0);
+    //BABYLON.Color3(0.662745, 0.662745, 0.662745);
+    //Cargar la cámara
+    var Camara = new BABYLON.ArcRotateCamera("Camera", 1, 0.8, 10, new BABYLON.Vector3(0, 0, 0), Escenario);
+    //BABYLON.FreeCamera("FreeCamera", new BABYLON.Vector3(0, 1, -15), Escenario);
+    // Agregamos la luz
+    var Luz =  new BABYLON.HemisphericLight("Hemi0", new BABYLON.Vector3(0, 1, 0), Escenario);
+    //new BABYLON.PointLight("Omni0", new BABYLON.Vector3(1, 10, 1), Escenario);
+    Luz.diffuse = new BABYLON.Color3(1, 1, 1);
+	Luz.specular = new BABYLON.Color3(1, 1, 1);
+	Luz.groundColor = new BABYLON.Color3(0, 0, 0);
+    // elemento 3D (esfera)
+    var sphere= BABYLON.Mesh.CreateSphere("sphere", 10, 2, Escenario);
+    sphere.position.y = 1;
+    sphere.material = new BABYLON.StandardMaterial("Materialsphere", Escenario);
+    sphere.material.diffuseColor = new BABYLON.Color3(1,0,0);
+    var ground = BABYLON.Mesh.CreateGround("ground", 6, 6, 2, Escenario);
+    ground.material = new BABYLON.StandardMaterial("Materialground", Escenario);
+	ground.material.diffuseColor = new BABYLON.Color3(0.662745, 0.662745, 0.662745);
+	ground.material.groundColor = new BABYLON.Color3(0.662745, 0.662745, 0.662745);
+    // Agregar la cámara al escenario
+    Escenario.activeCamera.attachControl(ElementoCanvas);
+    // Agregamos un render del escenario
+    Motorbabylon.runRenderLoop(function () {
+        Escenario.render();
+    });
+</script>
+
+<body>
+
+</body>
+</html>
